@@ -2,7 +2,6 @@ const itemForm = document.getElementById("item-form");
 const itemInput = document.getElementById("item-input");
 const itemList = document.getElementById("item-list");
 const clearBtn = document.getElementById("clear");
-const items = itemList.querySelectorAll("li");
 const itemFilter = document.getElementById("filter");
 
 function addItem(e) {
@@ -51,6 +50,20 @@ function clearItem() {
   }
   checkUI();
 }
+function filterItems(e) {
+  const items = itemList.querySelectorAll("li");
+  const text = e.target.value.toLowerCase();
+
+  items.forEach((item) => {
+    const itemName = item.firstChild.textContent.toLocaleLowerCase();
+
+    if (itemName.indexOf(text) != -1) {
+      item.style.display = "flex";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
 
 function checkUI() {
   const items = itemList.querySelectorAll("li");
@@ -67,5 +80,6 @@ function checkUI() {
 itemForm.addEventListener("submit", addItem);
 itemList.addEventListener("click", removeItem);
 clearBtn.addEventListener("click", clearItem);
+itemFilter.addEventListener("input", filterItems);
 
 checkUI();
